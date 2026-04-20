@@ -41,7 +41,7 @@ steps:
   - task: Docker@2
     displayName: 'Build e Push da imagem'
     inputs:
-      containerRegistry: 'acr-connection'
+      containerRegistry: 'sprjacr-connection'
       repository: '$(imageName)'
       command: 'buildAndPush'
       Dockerfile: 'auth-backend/Dockerfile'
