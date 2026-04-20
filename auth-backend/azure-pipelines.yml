@@ -36,7 +36,7 @@ steps:
       goals: 'package'
       options: '-DskipTests'
       javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.25'
+      jdkVersionOption: '25'
 
   - task: Docker@2
     displayName: 'Build e Push da imagem'
@@ -45,6 +45,7 @@ steps:
       repository: '$(imageName)'
       command: 'buildAndPush'
       Dockerfile: 'auth-backend/Dockerfile'
+      buildContext: 'auth-backend'
       tags: |
         $(dateTag)
         latest
