@@ -19,11 +19,11 @@ steps:
   - pwsh: |
       $privateKeyBytes = [Convert]::FromBase64String($env:JWT_PRIVATE_KEY)
       $privateKey = [System.Text.Encoding]::UTF8.GetString($privateKeyBytes)
-      Set-Content -Path "src/main/resources/privateKey.pem" -Value $privateKey -NoNewline
+      Set-Content -Path "auth-backend/src/main/resources/privateKey.pem" -Value $privateKey -NoNewline
 
       $publicKeyBytes = [Convert]::FromBase64String($env:JWT_PUBLIC_KEY)
       $publicKey = [System.Text.Encoding]::UTF8.GetString($publicKeyBytes)
-      Set-Content -Path "src/main/resources/publicKey.pem" -Value $publicKey -NoNewline
+      Set-Content -Path "auth-backend/src/main/resources/publicKey.pem" -Value $publicKey -NoNewline
     displayName: 'Criar arquivos PEM'
     env:
       JWT_PRIVATE_KEY: $(JWT_PRIVATE_KEY)
