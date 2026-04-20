@@ -44,7 +44,7 @@ steps:
       containerRegistry: 'acr-connection'
       repository: '$(imageName)'
       command: 'buildAndPush'
-      Dockerfile: 'Dockerfile'
+      Dockerfile: 'auth-backend/Dockerfile'
       tags: |
         $(dateTag)
         latest
