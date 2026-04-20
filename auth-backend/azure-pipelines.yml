@@ -1,0 +1,52 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Default
+
+variables:
+  - group: auth-service-secrets
+  - name: acrName
+    value: sprjacrshared
+  - name: imageName
+    value: auth-backend
+  - name: dateTag
+    value: $[format('{0:yyyy}{0:MM}{0:dd}-{0:HH}{0:mm}', pipeline.startTime)]
+
+steps:
+  - pwsh: |
+      $privateKeyBytes = [Convert]::FromBase64String($env:JWT_PRIVATE_KEY)
+      $privateKey = [System.Text.Encoding]::UTF8.GetString($privateKeyBytes)
+      Set-Content -Path "src/main/resources/privateKey.pem" -Value $privateKey -NoNewline
+
+      $publicKeyBytes = [Convert]::FromBase64String($env:JWT_PUBLIC_KEY)
+      $publicKey = [System.Text.Encoding]::UTF8.GetString($publicKeyBytes)
+      Set-Content -Path "src/main/resources/publicKey.pem" -Value $publicKey -NoNewline
+    displayName: 'Criar arquivos PEM'
+    env:
+      JWT_PRIVATE_KEY: $(JWT_PRIVATE_KEY)
+      JWT_PUBLIC_KEY: $(JWT_PUBLIC_KEY)
+
+  - task: Maven@4
+    displayName: 'Build Quarkus'
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'package'
+      options: '-DskipTests'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.25'
+
+  - task: Docker@2
+    displayName: 'Build e Push da imagem'
+    inputs:
+      containerRegistry: 'acr-connection'
+      repository: '$(imageName)'
+      command: 'buildAndPush'
+      Dockerfile: 'Dockerfile'
+      tags: |
+        $(dateTag)
+        latest
+    env:
+      DOCKER_BUILDKIT: 0
