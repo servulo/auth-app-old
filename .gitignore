@@ -1,0 +1,32 @@
+# Maven
+target/
+.mvn/wrapper/maven-wrapper.jar
+
+# Quarkus
+.quarkus/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# Native image
+*.so
+*.dll
+*.exe
+
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+application-local.properties
+application-dev.properties
