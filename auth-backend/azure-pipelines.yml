@@ -9,7 +9,7 @@ pool:
 variables:
   - group: auth-service-secrets
   - name: acrName
-    value: sprjacrshared
+    value: sprjacr
   - name: imageName
     value: auth-backend
   - name: dateTag
