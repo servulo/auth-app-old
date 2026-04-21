@@ -51,10 +51,11 @@ steps:
         latest
     env:
       DOCKER_BUILDKIT: 0
+
   - task: AzureCLI@2
     displayName: 'Deploy no Container App'
     inputs:
-      azureSubscription: 'azure-connection'
+      azureSubscription: 'sprjacr-connection'
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
