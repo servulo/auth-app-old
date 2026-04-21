@@ -55,7 +55,7 @@ steps:
   - task: AzureCLI@2
     displayName: 'Deploy no Container App'
     inputs:
-      azureSubscription: 'sprjacr-connection'
+      azureSubscription: 'azure-connection'
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
