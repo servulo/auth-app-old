@@ -51,3 +51,14 @@ steps:
         latest
     env:
       DOCKER_BUILDKIT: 0
+  - task: AzureCLI@2
+    displayName: 'Deploy no Container App'
+    inputs:
+      azureSubscription: 'azure-connection'
+      scriptType: 'pscore'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az containerapp update `
+          --name sprj-ca-auth-backend `
+          --resource-group sprj-rg `
+          --image sprjacr.azurecr.io/$(imageName):$(dateTag)      
