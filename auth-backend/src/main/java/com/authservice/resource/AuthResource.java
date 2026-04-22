@@ -23,6 +23,7 @@ public class AuthResource {
 
     @POST
     @Path("/register")
+    @Authenticated
     public Response register(AuthDTO.RegisterRequest request) {
         AuthDTO.AuthResponse response = authService.register(request);
         return Response.status(Response.Status.CREATED).entity(response).build();
